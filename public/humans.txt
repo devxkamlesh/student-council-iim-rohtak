@@ -1,0 +1,13 @@
+/* TEAM */
+  Developer: Kamlesh Choudhary (devxkamlesh)
+  Role: Full Stack Developer
+  Site: https://devxkamlesh.com
+  GitHub: https://github.com/devxkamlesh
+  LinkedIn: https://linkedin.com/in/devxkamlesh
+  X: https://x.com/devxkamlesh
+
+/* SITE */
+  Project: Student Council, IIM Rohtak
+  Standards: HTML5, CSS3, TypeScript
+  Stack: Next.js 16, React 19, MySQL, Cloudinary, Tailwind CSS
+  Hosting: Hostinger

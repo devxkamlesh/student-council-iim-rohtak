@@ -2,25 +2,232 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Smooth custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Reveal-on-scroll friendly fade */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+/* TEDx carousel slide transitions */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(6%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-6%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slide-right {
+  animation: slideInFromRight 0.45s ease-out both;
+}
+.animate-slide-left {
+  animation: slideInFromLeft 0.45s ease-out both;
+}
+
+/* Legal pages typography */
+.legal-prose h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+.legal-prose h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.legal-prose p {
+  line-height: 1.75;
+}
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.legal-prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-prose a:hover {
+  color: #1d4ed8;
+}
+.legal-prose strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Prevent any accidental horizontal scroll at odd zoom/scale levels */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* ---- Fluid typography ----
+   Headings scale smoothly with the viewport using clamp(), so the layout
+   looks balanced at every browser zoom and Windows display-scale level
+   (100%, 125%, 150%) instead of jumping between fixed breakpoints. */
+.fluid-h1 {
+  font-size: clamp(1.875rem, 1.1rem + 3.2vw, 3.75rem);
+  line-height: 1.1;
+}
+.fluid-h2 {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  line-height: 1.2;
+}
+.fluid-lead {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.375rem);
+}
+
+/* ---- Very large / 4K screen scaling ----
+   The layout uses rem-based spacing, so bumping the root font-size scales
+   the whole design uniformly on genuinely high-resolution displays.
+   (Note: a 1920px screen at Windows 125% scale reports ~1536 CSS px, so it
+   is treated as a normal laptop width and keeps the standard 16px base.) */
+@media (min-width: 2560px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media (min-width: 3840px) {
+  html {
+    font-size: 22px;
+  }
+}
+
+/* ---- Rich text editor + rendered rich content ---- */
+.rte-content:empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+}
+.rte-content:focus::before {
+  content: none;
+}
+
+/* Shared styling for editor content and public rendering */
+.rte-content,
+.rich-content {
+  word-break: break-word;
+}
+.rte-content h2,
+.rich-content h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0.6em 0 0.3em;
+}
+.rte-content h3,
+.rich-content h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0.5em 0 0.25em;
+}
+.rte-content ul,
+.rich-content ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+  margin: 0.4em 0;
+}
+.rte-content ol,
+.rich-content ol {
+  list-style: decimal;
+  padding-left: 1.4rem;
+  margin: 0.4em 0;
+}
+.rte-content li,
+.rich-content li {
+  margin: 0.15em 0;
+}
+.rte-content a,
+.rich-content a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rich-content p {
+  margin: 0.4em 0;
+}
+.rich-content blockquote,
+.rte-content blockquote {
+  border-left: 3px solid #cbd5e1;
+  padding-left: 0.8rem;
+  color: #475569;
+  margin: 0.5em 0;
+}
+
+/* ---- Banner scanner sweep (on hover) ---- */
+@keyframes scannerSweep {
+  0% {
+    transform: translateY(-80%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(240%);
+    opacity: 0;
+  }
+}
+.group:hover .scanner-line {
+  animation: scannerSweep 2.2s ease-in-out infinite;
 }
