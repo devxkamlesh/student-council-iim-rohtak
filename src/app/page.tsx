@@ -6,37 +6,13 @@ import TeamCard from "@/components/TeamCard";
 import CollapsibleTeam from "@/components/CollapsibleTeam";
 import Reveal from "@/components/Reveal";
 import { SITE } from "@/lib/data";
-import { getTeamByBatches, getHighlights, getSiteSettings } from "@/lib/queries";
-
-const highlightIcons: Record<string, React.ReactElement> = {
-  committees: (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a3 3 0 10-3-3" />
-    </svg>
-  ),
-  clubs: (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-    </svg>
-  ),
-  events: (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-  ),
-  leave: (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
-  ),
-};
+import { getTeamByBatches, getSiteSettings } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [batchTeams, highlights, settings] = await Promise.all([
+  const [batchTeams, settings] = await Promise.all([
     getTeamByBatches(),
-    getHighlights(),
     getSiteSettings(),
   ]);
 
@@ -142,39 +118,6 @@ export default async function Home() {
               vibrant student environment.
             </p>
           </Reveal>
-        </section>
-
-        {/* Highlights */}
-        <section className="bg-gray-50 py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6">
-            <Reveal className="mb-12 text-center">
-              <h2 className="fluid-h2 font-bold text-gray-900">
-                What We Do
-              </h2>
-              <div className="mx-auto mt-4 h-1 w-20 rounded bg-blue-600" />
-            </Reveal>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {highlights.map((item, i) => (
-                <Reveal key={item.title} delay={i * 100} direction="up">
-                  <Link
-                    href={item.href}
-                    className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-xl"
-                  >
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-colors duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                      {highlightIcons[item.iconKey]}
-                    </div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                      {item.title}
-                    </h3>
-                    <div
-                      className="rich-content text-sm leading-relaxed text-gray-500"
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Current Senior Team (the active batch, shown expanded) */}

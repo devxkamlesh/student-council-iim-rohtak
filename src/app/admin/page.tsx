@@ -23,7 +23,7 @@ async function safeCount(sql: string): Promise<number> {
 async function getStats() {
   const [
     team, committees, clubsDomain, clubsRec, events, gallery,
-    highlights, navLinks, users, activeUsers,
+    navLinks, users, activeUsers,
   ] = await Promise.all([
     safeCount("SELECT COUNT(*) c FROM team_members"),
     safeCount("SELECT COUNT(*) c FROM committees"),
@@ -31,7 +31,6 @@ async function getStats() {
     safeCount("SELECT COUNT(*) c FROM clubs WHERE club_type = 'recreational'"),
     safeCount("SELECT COUNT(*) c FROM events"),
     safeCount("SELECT COUNT(*) c FROM gallery_images"),
-    safeCount("SELECT COUNT(*) c FROM highlights"),
     safeCount("SELECT COUNT(*) c FROM nav_links"),
     safeCount("SELECT COUNT(*) c FROM users"),
     safeCount("SELECT COUNT(*) c FROM users WHERE is_active = TRUE"),
@@ -61,7 +60,7 @@ async function getStats() {
   } catch { /* ignore */ }
 
   return {
-    team, committees, clubsDomain, clubsRec, events, gallery, highlights,
+    team, committees, clubsDomain, clubsRec, events, gallery,
     navLinks, users, activeUsers, grPending, grProgress, grResolved, monthly,
   };
 }
@@ -168,10 +167,6 @@ export default async function AdminDashboard() {
               <div>
                 <span className="text-xs text-gray-500">Menu Links</span>
                 <p className="mt-0.5 text-lg font-bold text-gray-900">{s.navLinks}</p>
-              </div>
-              <div>
-                <span className="text-xs text-gray-500">Homepage Cards</span>
-                <p className="mt-0.5 text-lg font-bold text-gray-900">{s.highlights}</p>
               </div>
               {can("users.view") && (
                 <div>

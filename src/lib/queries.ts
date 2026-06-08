@@ -109,29 +109,6 @@ export async function getFlagshipEvents(): Promise<
   });
 }
 
-export type Highlight = {
-  title: string;
-  description: string;
-  href: string;
-  iconKey: string;
-};
-
-/** Homepage "What We Do" cards. */
-export async function getHighlights(): Promise<Highlight[]> {
-  const [rows] = await db.query<RowDataPacket[]>(
-    `SELECT title, description, href, icon_key
-       FROM highlights
-      WHERE is_active = TRUE
-      ORDER BY display_order`
-  );
-  return rows.map((r) => ({
-    title: r.title,
-    description: r.description,
-    href: r.href,
-    iconKey: r.icon_key,
-  }));
-}
-
 export type ShuttleDay = {
   day: string;
   campus: string[];

@@ -57,7 +57,6 @@ const sections: NavSection[] = [
       { label: "Clubs", href: "/admin/clubs", perm: "content.clubs", icon: "clubs" },
       { label: "Events", href: "/admin/events", perm: "content.events", icon: "events" },
       { label: "Gallery", href: "/admin/gallery", perm: "content.gallery", icon: "gallery" },
-      { label: "Homepage Cards", href: "/admin/highlights", perm: "content.homepage", icon: "homepage" },
       { label: "Navigation", href: "/admin/navigation", perm: "content.navigation", icon: "navigation" },
       { label: "Leave & Timings", href: "/admin/leave", perm: "content.leave", icon: "leave" },
     ],
