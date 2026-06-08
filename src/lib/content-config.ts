@@ -104,31 +104,6 @@ export const CONTENT: Record<string, ContentEntity> = {
     ],
     listColumns: ["name", "club_type"],
   },
-  highlights: {
-    key: "highlights",
-    table: "highlights",
-    permission: "content.homepage",
-    title: "Homepage Cards",
-    singular: "Card",
-    fields: [
-      { name: "title", label: "Title", type: "text", required: true },
-      { name: "description", label: "Description", type: "richtext", required: true },
-      { name: "href", label: "Link (e.g. /committees)", type: "text", required: true },
-      {
-        name: "icon_key",
-        label: "Icon",
-        type: "select",
-        options: [
-          { value: "committees", label: "Committees" },
-          { value: "clubs", label: "Clubs" },
-          { value: "events", label: "Events" },
-          { value: "leave", label: "Leave" },
-        ],
-      },
-      { name: "display_order", label: "Display Order", type: "number" },
-    ],
-    listColumns: ["title", "href"],
-  },
   shuttle: {
     key: "shuttle",
     table: "shuttle_timings",

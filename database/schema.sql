@@ -81,18 +81,6 @@ CREATE TABLE IF NOT EXISTS events (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- ---------- Content: Homepage "What We Do" cards ----------
-CREATE TABLE IF NOT EXISTS highlights (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  href VARCHAR(255) NOT NULL,
-  icon_key VARCHAR(50),
-  display_order INT DEFAULT 0,
-  is_active BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 -- ---------- Content: Leave & Timings ----------
 CREATE TABLE IF NOT EXISTS shuttle_timings (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -256,7 +244,6 @@ INSERT INTO permissions (perm_key, label, category) VALUES
   ('content.events',      'Manage events',                            'Content'),
   ('content.gallery',     'Manage gallery',                           'Content'),
   ('content.leave',       'Manage leave & timings',                   'Content'),
-  ('content.homepage',    'Manage homepage cards',                    'Content'),
   ('content.navigation',  'Manage navigation menu',                   'Content'),
   ('content.settings',    'Manage site settings (logo, banner, footer)', 'Content'),
   ('calendar.access',     'Access calendar page',                     'Special Access')
@@ -265,7 +252,7 @@ ON DUPLICATE KEY UPDATE label = VALUES(label), category = VALUES(category);
 -- Administrator (full access) + standard bundled roles.
 INSERT INTO roles (name, slug, description, is_system) VALUES
   ('Administrator', 'administrator', 'Full access — every section of the admin panel.', TRUE),
-  ('Content Manager', 'content-manager', 'Manage all site content: team, committees, clubs, events, gallery, homepage cards, leave & timings.', FALSE),
+  ('Content Manager', 'content-manager', 'Manage all site content: team, committees, clubs, events, gallery, leave & timings.', FALSE),
   ('Site Manager', 'site-manager', 'Manage navigation menu and site settings (logo, banner, footer).', FALSE),
   ('User Manager', 'user-manager', 'Manage admin user accounts and their role assignments.', FALSE),
   ('Special Access (Calendar)', 'special-access-calendar', 'Access to the restricted Calendar page only.', FALSE),
@@ -280,7 +267,7 @@ SELECT r.id, p.id FROM roles r CROSS JOIN permissions p WHERE r.slug = 'administ
 INSERT IGNORE INTO role_permissions (role_id, permission_id)
 SELECT r.id, p.id FROM roles r JOIN permissions p
   ON p.perm_key IN ('admin.access','content.team','content.committees','content.clubs',
-                    'content.events','content.gallery','content.homepage','content.leave')
+                    'content.events','content.gallery','content.leave')
 WHERE r.slug = 'content-manager';
 
 -- Site Manager.
