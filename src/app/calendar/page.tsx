@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import GoogleSchedulingButton from "@/components/GoogleSchedulingButton";
 import { getSessionUser } from "@/lib/auth";
+import { getCalendarSettings } from "@/lib/queries";
 
 export const metadata: Metadata = {
   title: "Calendar",
@@ -13,17 +14,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
-
-const SCHEDULING_URL =
-  "https://calendar.google.com/calendar/appointments/AcZssZ2TWAaOfw0bqut7UophR0uRKyRuR7QP-daJGWU=?gv=true";
-
-const CALENDAR_EMBED_SRC =
-  "https://calendar.google.com/calendar/embed?src=student.council%40iimrohtak.ac.in&ctz=Asia%2FKolkata&showPrint=0&src=cGdwMTZjaGF1ZGhhcmltQGlpbXJvaHRhay5hYy5pbg&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=cGdwb2ZmaWNlQGlpbXJvaHRhay5hYy5pbg&src=c3R1ZGVudC5jb3VuY2lsQGlpbXJvaHRhay5hYy5pbg&color=%23039be5&color=%230b8043&color=%234285f4&color=%23f09300";
-
-const COTY_FORM_SRC =
-  "https://docs.google.com/forms/d/e/1FAIpQLSdOg4WtqxHel2Xs6cy1ePHZrq_dD0Qt7-Jw7RYUocIkbrJqhg/viewform?embedded=true";
-
-const ACAA_FORM_SRC = "https://forms.gle/3YCojSLxZeUs3tiF9";
 
 export default async function CalendarPage() {
   const user = await getSessionUser();
@@ -35,6 +25,13 @@ export default async function CalendarPage() {
   const allowed = user.permissions.includes("calendar.access");
 
   if (!allowed) redirect("/");
+
+  const {
+    schedulingUrl: SCHEDULING_URL,
+    embedSrc: CALENDAR_EMBED_SRC,
+    cotyFormSrc: COTY_FORM_SRC,
+    acaaFormSrc: ACAA_FORM_SRC,
+  } = await getCalendarSettings();
 
   return (
     <>

@@ -301,6 +301,50 @@ export const getNavTree = cache(async (): Promise<NavItem[]> => {
   ];
 });
 
+export type CalendarSettings = {
+  schedulingUrl: string;
+  embedSrc: string;
+  cotyFormSrc: string;
+  acaaFormSrc: string;
+};
+
+/** Default calendar URLs — used when the DB has no override. */
+export const CALENDAR_DEFAULTS: CalendarSettings = {
+  schedulingUrl:
+    "https://calendar.google.com/calendar/appointments/AcZssZ2TWAaOfw0bqut7UophR0uRKyRuR7QP-daJGWU=?gv=true",
+  embedSrc:
+    "https://calendar.google.com/calendar/embed?src=student.council%40iimrohtak.ac.in&ctz=Asia%2FKolkata&showPrint=0&src=cGdwMTZjaGF1ZGhhcmltQGlpbXJvaHRhay5hYy5pbg&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=cGdwb2ZmaWNlQGlpbXJvaHRhay5hYy5pbg&src=c3R1ZGVudC5jb3VuY2lsQGlpbXJvaHRhay5hYy5pbg&color=%23039be5&color=%230b8043&color=%234285f4&color=%23f09300",
+  cotyFormSrc:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdOg4WtqxHel2Xs6cy1ePHZrq_dD0Qt7-Jw7RYUocIkbrJqhg/viewform?embedded=true",
+  acaaFormSrc: "https://forms.gle/3YCojSLxZeUs3tiF9",
+};
+
+/**
+ * Calendar page URLs (scheduling button, embedded calendar, COTY & ACAA forms).
+ * Falls back to CALENDAR_DEFAULTS when a value isn't set in the database.
+ */
+export const getCalendarSettings = cache(async (): Promise<CalendarSettings> => {
+  try {
+    const [rows] = await db.query<RowDataPacket[]>(
+      `SELECT setting_key, setting_value FROM site_settings
+        WHERE setting_key IN
+          ('calendar_scheduling_url','calendar_embed_src','calendar_coty_form_src','calendar_acaa_form_src')`
+    );
+    const map = new Map<string, string>();
+    for (const r of rows) {
+      if (r.setting_value) map.set(r.setting_key, r.setting_value);
+    }
+    return {
+      schedulingUrl: map.get("calendar_scheduling_url") || CALENDAR_DEFAULTS.schedulingUrl,
+      embedSrc: map.get("calendar_embed_src") || CALENDAR_DEFAULTS.embedSrc,
+      cotyFormSrc: map.get("calendar_coty_form_src") || CALENDAR_DEFAULTS.cotyFormSrc,
+      acaaFormSrc: map.get("calendar_acaa_form_src") || CALENDAR_DEFAULTS.acaaFormSrc,
+    };
+  } catch {
+    return CALENDAR_DEFAULTS;
+  }
+});
+
 export type SiteSettings = {
   logoUrl: string;
   heroBannerUrl: string;

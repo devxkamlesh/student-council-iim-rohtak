@@ -246,6 +246,7 @@ INSERT INTO permissions (perm_key, label, category) VALUES
   ('content.leave',       'Manage leave & timings',                   'Content'),
   ('content.navigation',  'Manage navigation menu',                   'Content'),
   ('content.settings',    'Manage site settings (logo, banner, footer)', 'Content'),
+  ('content.calendar',    'Manage calendar page settings',            'Content'),
   ('calendar.access',     'Access calendar page',                     'Special Access')
 ON DUPLICATE KEY UPDATE label = VALUES(label), category = VALUES(category);
 
