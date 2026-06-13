@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LegalLayout from "@/components/LegalLayout";
+import DevBadge from "@/components/DevBadge";
 
 export const metadata: Metadata = {
   title: "Disclaimer",
@@ -60,6 +61,10 @@ export default function DisclaimerPage() {
         benefit from such links and bears no responsibility for any actions or
         purchases made by you through those websites.
       </p>
+
+      <div className="mt-12 border-t border-gray-200 pt-6 text-center text-xs text-gray-400">
+        <DevBadge />
+      </div>
     </LegalLayout>
   );
 }

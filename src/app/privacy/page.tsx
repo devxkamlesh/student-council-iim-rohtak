@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LegalLayout from "@/components/LegalLayout";
+import DevBadge from "@/components/DevBadge";
 import { SITE } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -173,6 +174,10 @@ export default function PrivacyPage() {
         For any queries regarding this privacy policy or your data, please reach
         out at: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </p>
+
+      <div className="mt-12 border-t border-gray-200 pt-6 text-center text-xs text-gray-400">
+        <DevBadge />
+      </div>
     </LegalLayout>
   );
 }
