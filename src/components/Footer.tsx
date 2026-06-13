@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { SITE } from "@/lib/data";
 import { getNavTree, getSiteSettings } from "@/lib/queries";
-import DevBadge from "@/components/DevBadge";
 
 export default async function Footer() {
   const [tree, settings] = await Promise.all([getNavTree(), getSiteSettings()]);
@@ -104,10 +103,7 @@ export default async function Footer() {
           </div>
           <p>© {new Date().getFullYear()} Student Council Team, IIM Rohtak.</p>
         </div>
-        {/* Developer attribution */}
-        <div className="mx-auto max-w-7xl px-4 pb-5 text-center text-xs sm:px-6">
-          <DevBadge />
-        </div>
+        {/* Developer attribution removed — shown on privacy & disclaimer pages */}
       </div>
     </footer>
   );
